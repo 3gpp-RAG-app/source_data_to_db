@@ -1,0 +1,4 @@
+venv/
+.env
+3_data_insert/config.py
+scripts/
