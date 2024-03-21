@@ -10,7 +10,7 @@ from pymilvus import (
     DataType,
     Collection,
 )
-
+from config import HOST, MILVUS_PORT, MILVUS_PORT,MILVUS_USER, MILVUS_PASSWORD
 
 fmt = "\n=== {:30} ===\n"
 search_latency_fmt = "search latency = {:.4f}s"
@@ -20,7 +20,7 @@ print(fmt.format("start connecting to Milvus"))
 connections.connect(
     "default", host=HOST, port=MILVUS_PORT, user=MILVUS_USER, password=MILVUS_PASSWORD
 )
-# utility.drop_collection("NR_NG_RAN")
+utility.drop_collection("NR_NG_RAN")
 print("deleted, and new being created")
 
 

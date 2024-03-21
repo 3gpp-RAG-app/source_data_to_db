@@ -11,6 +11,9 @@ from pymilvus import (
     Collection,
 )
 import pymilvus
+from config import HOST, MILVUS_PORT, MILVUS_PORT,MILVUS_USER, MILVUS_PASSWORD
+
+
 
 sdk_version = pymilvus.__version__
 print(f"PyMilvus SDK Version: {sdk_version}")
