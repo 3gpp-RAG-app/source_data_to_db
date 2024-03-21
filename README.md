@@ -10,7 +10,8 @@ The project is developed by the third-year Information Technology students from 
 
 ## Introduction of the repository
 
-This is the data process part of a company-oriented-project, the aim is to "Define and develop a market-leading 3GPP CR analytics application MVP(minimum viable product)". This repository includes three folders each responsible for a specific purpose.
+This is the data process part of a company-oriented-project, the project aim is to "Define and develop a market-leading 3GPP CR analytics application MVP(minimum viable product)".
+This repository includes three folders each responsible for a specific purpose.
 
 - **1_mkd_from_docx**,the script used to convert the word file to mark down file.
 - **2_Json_chunks**,the script used to chunk the mark down file into small pices.
@@ -20,86 +21,83 @@ This is the data process part of a company-oriented-project, the aim is to "Defi
 
 - 1_mkd_from_docx:
 
-  - **HTML & CSS**
-  - [**Bootstrap**](https://github.com/twbs/bootstrap#readme) 5.2.2
-  - [**React Bootstrap**](https://react-bootstrap.github.io/) 2.6.0
+  - **converttomkd.sh**
+  - This Bash script utilizes the pandoc command-line tool for converting documents. pandoc is a versatile tool capable of converting between various document formats, including Word documents (docx) to Markdown (md). By leveraging pandoc, the script automates the conversion process, making it efficient and convenient.
+
+  - **organize_files.sh**
+  - This shell script is to organize Markdown files into subdirectories based on their filenames, utilizing basic file manipulation commands in Bash.
 
 - 2_Json_chunks:
 
-  - [**React.js**](https://reactjs.org/) 18.2.0
+  - **1_split_annex.py**
+  - This Python script utilizes regular expressions and file manipulation functionalities in the os module to split Markdown files based on specified headers.
+
+  - **2_mkd_splitter.py**
+  - The script aims to split Markdown files based on headers, extracting metadata and content while utilizing regular expressions, the langchain_text_splitters library for Markdown text splitting, and JSON serialization for data storage.
+
+  - **3_add_meta_tp_json.py**
+  - This script extracts metadata from DOCX files, updates corresponding JSON files with the extracted metadata, utilizing Python's os module for file operations, the docx library for parsing DOCX files, and JSON serialization for data storage.
+
+  - **4_insert_embedings_to_json.py**
+  - This script processes JSON files, combines metadata and content, retrieves OpenAI embeddings for the combined content, utilizing Python's os, requests, and json modules, as well as OpenAI's API for text embeddings.
+
+  - **json_from_pdf_fixed_size.py**
+  - This Python script extracts text and metadata from PDF files, splits the text into chunks, and saves the extracted information into JSON files, utilizing the os, json, PyPDF2, and langchain libraries for PDF processing and text splitting.
 
 - 3_data_insert:
 
-  - [**Node.js**](https://nodejs.org/en/) 19.0.1
-  - [**Express.js**](https://github.com/expressjs/express) 4.18.2
-  - [**Axios.js**](https://github.com/axios/axios#readme) 1.1.3
+  - **creat_collection.py**
+  - This Python script establishes a connection to Milvus, a vector database, creates a collection with a specified schema, including fields for storing embeddings and text, and creates an index on the embeddings field for efficient similarity search, utilizing the pymilvus library for interaction with Milvus.
+
+  - **data_insert.py**
+  - This Python script loads JSON files containing metadata, text, and embeddings, and inserts them into a Milvus collection for efficient similarity search, utilizing the pymilvus library to interact with Milvus and json module for JSON file handling.
+
+  - **printcollection.py**
+  - This Python script demonstrates connection to a Milvus server, lists existing collections, retrieves schema information for a specific collection, and prints the schema fields, utilizing the pymilvus library for interaction with Milvus.
 
 ## How to implement the data process
 
 **Step one:**
 
-Download the project / clone the project repository
+Ensure you have Python installed on your system.
 
 **Step two:**
 
-Within the root folder, install the following dependencies:
+Install necessary libraries by running:
 
-- [**Axios.js**](https://github.com/axios/axios#readme) 1.1.3
-- [**Chart.js**](https://www.chartjs.org/) 3.9.1
-- [**react-chartjs-2**](https://github.com/reactchartjs/react-chartjs-2#readme) 4.3.1
-- [**jwt-decode**](https://github.com/auth0/jwt-decode#readme) 3.1.2
-- [**Bootstrap**](https://github.com/twbs/bootstrap#readme) 5.2.2
-- [**react-dom**](https://www.npmjs.com/package/react-dom) 18.2.0
-- [**react-router-dom**](https://www.npmjs.com/package/react-router-dom) 6.4.3
+- pip install python-docx pymilvus langchain pandoc
 
 **Step three:**
 
-Go to the server folder:
+- Convert DOCX Files to Markdown:
 
-```
-npm init -y
-npm install express
-```
+  Place all your DOCX files in a directory(`path to your directory containing DOCX files`).
+  Run: bash converttomkd.sh
 
-Install the following dependencies:
+- Organize Markdown files into subdirectories based on their filenames:
 
-- [**bcrypt**](https://github.com/dcodeIO/bcrypt.js#readme) 2.4.3
-- [**body-parser**](https://github.com/expressjs/body-parser#readme) 1.20.1
-- [**cors**](https://github.com/expressjs/cors#readme) 2.8.5
-- [**jsonwebtoken**](https://github.com/auth0/node-jsonwebtoken#readme) 8.5.1
-- [**mysql**](https://github.com/mysqljs/mysql#readme) 2.18.1
-- [**passport**](https://github.com/jaredhanson/passport#readme) 0.6.0
-- [**passport-http**](https://github.com/jaredhanson/passport-http#readme) 0.3.0
-- [**passport-jwt**](https://github.com/themikenicholson/passport-jwt#readme) 4.0.0
-- [**uuid**](https://github.com/uuidjs/uuid#readme) 9.0.0
+  bash organize_files.sh
 
 **Step four:**
 
-Create the local database :
+- Run the python file in the 2_Json_chunks accordingly to chunk the Markdown file into prepared Json file:
 
-- Start mysql and import the _charttest.sql_ file into your local database
-- Create a _database.js_ file inside the server folder as follows, and modify the ‘xxxx’ part as needed:
-
-```
-const mysql = require("mysql");
-        const connection = mysql.createConnection({
-         host: "xxxx",
-         user: "xxxx",
-         password: "xxxx",
-         database: "xxxx",
-   });
-
-module.exports = connection;
-```
+  python 1_split_annex.py
+  python 2_mkd_splitter.py
+  python 3_add_meta_tp_json.py
+  python 4_insert_embedings_to_json.py
+  python json_from_pdf_fixed_size.py
 
 **Step five:**
 
-To start the application, run the following command:
+- Create Collection:
 
-```
-cd server
-node index.js
-cd ..
-npm start
+  python creat_collection.py
 
-```
+- Insert Data:
+
+  python data_insert.py
+
+- Verify Collection and Schema:
+
+  python printcollection.py
