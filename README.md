@@ -22,38 +22,38 @@ This repository includes three folders each responsible for a specific purpose.
 - 1_mkd_from_docx:
 
   - **converttomkd.sh**
-  - This Bash script utilizes the pandoc command-line tool for converting documents. pandoc is a versatile tool capable of converting between various document formats, including Word documents (docx) to Markdown (md). By leveraging pandoc, the script automates the conversion process, making it efficient and convenient.
+    This Bash script utilizes the pandoc command-line tool for converting documents. pandoc is a versatile tool capable of converting between various document formats, including Word documents (docx) to Markdown (md). By leveraging pandoc, the script automates the conversion process, making it efficient and convenient.
 
   - **organize_files.sh**
-  - This shell script is to organize Markdown files into subdirectories based on their filenames, utilizing basic file manipulation commands in Bash.
+    This shell script is to organize Markdown files into subdirectories based on their filenames, utilizing basic file manipulation commands in Bash.
 
 - 2_Json_chunks:
 
   - **1_split_annex.py**
-  - This Python script utilizes regular expressions and file manipulation functionalities in the os module to split Markdown files based on specified headers.
+    This Python script utilizes regular expressions and file manipulation functionalities in the os module to split Markdown files based on specified headers.
 
   - **2_mkd_splitter.py**
-  - The script aims to split Markdown files based on headers, extracting metadata and content while utilizing regular expressions, the langchain_text_splitters library for Markdown text splitting, and JSON serialization for data storage.
+    The script aims to split Markdown files based on headers, extracting metadata and content while utilizing regular expressions, the langchain_text_splitters library for Markdown text splitting, and JSON serialization for data storage.
 
   - **3_add_meta_tp_json.py**
-  - This script extracts metadata from DOCX files, updates corresponding JSON files with the extracted metadata, utilizing Python's os module for file operations, the docx library for parsing DOCX files, and JSON serialization for data storage.
+    This script extracts metadata from DOCX files, updates corresponding JSON files with the extracted metadata, utilizing Python's os module for file operations, the docx library for parsing DOCX files, and JSON serialization for data storage.
 
   - **4_insert_embedings_to_json.py**
-  - This script processes JSON files, combines metadata and content, retrieves OpenAI embeddings for the combined content, utilizing Python's os, requests, and json modules, as well as OpenAI's API for text embeddings.
+    This script processes JSON files, combines metadata and content, retrieves OpenAI embeddings for the combined content, utilizing Python's os, requests, and json modules, as well as OpenAI's API for text embeddings.
 
   - **json_from_pdf_fixed_size.py**
-  - This Python script extracts text and metadata from PDF files, splits the text into chunks, and saves the extracted information into JSON files, utilizing the os, json, PyPDF2, and langchain libraries for PDF processing and text splitting.
+    This Python script extracts text and metadata from PDF files, splits the text into chunks, and saves the extracted information into JSON files, utilizing the os, json, PyPDF2, and langchain libraries for PDF processing and text splitting.
 
 - 3_data_insert:
 
   - **creat_collection.py**
-  - This Python script establishes a connection to Milvus, a vector database, creates a collection with a specified schema, including fields for storing embeddings and text, and creates an index on the embeddings field for efficient similarity search, utilizing the pymilvus library for interaction with Milvus.
+    This Python script establishes a connection to Milvus, a vector database, creates a collection with a specified schema, including fields for storing embeddings and text, and creates an index on the embeddings field for efficient similarity search, utilizing the pymilvus library for interaction with Milvus.
 
   - **data_insert.py**
-  - This Python script loads JSON files containing metadata, text, and embeddings, and inserts them into a Milvus collection for efficient similarity search, utilizing the pymilvus library to interact with Milvus and json module for JSON file handling.
+    This Python script loads JSON files containing metadata, text, and embeddings, and inserts them into a Milvus collection for efficient similarity search, utilizing the pymilvus library to interact with Milvus and json module for JSON file handling.
 
   - **printcollection.py**
-  - This Python script demonstrates connection to a Milvus server, lists existing collections, retrieves schema information for a specific collection, and prints the schema fields, utilizing the pymilvus library for interaction with Milvus.
+    This Python script demonstrates connection to a Milvus server, lists existing collections, retrieves schema information for a specific collection, and prints the schema fields, utilizing the pymilvus library for interaction with Milvus.
 
 ## How to implement the data process
 
