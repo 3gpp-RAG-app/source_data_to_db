@@ -1,33 +1,32 @@
-# 3GPP-CHATBOT-DATA-PROCESS
+# 3GPP Data Preparation And Data Insert
 
-## The project developers
+The data preparation process refers to extracting relevant pieces of text from the source file format DOCX while preserving basic layout elements such as headers and tables.
 
-The project is developed by the third-year Information Technology students from Oulu University of Applied Sciences:
+The extracted text is then used to generate source data embeddings representations.
 
-- **Antti-Jussi Niku**, [GitHub account](https://github.com/ArunJ0)
-- **Mufida Alakulju**, [GitHub account](https://github.com/mufidaA)
-- **Yinan Li**, [GitHub account](https://github.com/YinanLi1987)
+The output of the preparation process is project own file format as JSON, containing metadata, a content list, original text content, and embeddings.
+
+These JSON files are then used to execute data insertion while maintaining the relational structure of the text chunks.
 
 ## Introduction of the repository
 
-This is the data process part of a company-oriented-project, the project aim is to "Define and develop a market-leading 3GPP CR analytics application MVP(minimum viable product)".
-This repository includes three folders each responsible for a specific purpose.
+### 1_mkd_from_docx
 
-- **1_mkd_from_docx**,the script used to convert the word file to mark down file.
-- **2_Json_chunks**,the script used to chunk the mark down file into small pices.
-- **3_data_insert**,the script used to embedding and inserting the Json file.
+the folder contains Bash scripts used to convert the word file to markdown file.
 
-## Technologies used in each folder
+- **converttomkd.sh**
+    This shell script utilizes the pandoc command-line tool for converting docx to markdown. 
 
-- 1_mkd_from_docx:
-
-  - **converttomkd.sh**
-    This Bash script utilizes the pandoc command-line tool for converting documents. pandoc is a versatile tool capable of converting between various document formats, including Word documents (docx) to Markdown (md). By leveraging pandoc, the script automates the conversion process, making it efficient and convenient.
-
-  - **organize_files.sh**
+- **organize_files.sh**
     This shell script is to organize Markdown files into subdirectories based on their filenames, utilizing basic file manipulation commands in Bash.
 
-- 2_Json_chunks:
+### 2_Json_chunks
+
+This folder contains Python scripts used to split the markdown file based on headers to create context-aware text chunks (paragraph level).
+
+Subsequently, it generates and inserts the corresponding embeddings into the same JSON file.
+
+It also includes a script that utilizes fixed-size recursive chunking with overlapping. This is useful in cases where chunk sizes are more relevant than individual topic sizes.
 
   - **1_split_annex.py**
     This Python script utilizes regular expressions and file manipulation functionalities in the os module to split Markdown files based on specified headers.
@@ -44,7 +43,20 @@ This repository includes three folders each responsible for a specific purpose.
   - **json_from_pdf_fixed_size.py**
     This Python script extracts text and metadata from PDF files, splits the text into chunks, and saves the extracted information into JSON files, utilizing the os, json, PyPDF2, and langchain libraries for PDF processing and text splitting.
 
-- 3_data_insert:
+  _The Json Output of the preparation process_
+
+  ```json
+  metadata_list	[…]
+  content_list	[…]
+  title	"3GPP TS 38.304"
+  author	"MCC Support"
+  version	"V18.0.0"
+  subject	"NR; User Equipment (UE) …tive state (Release 18)"
+  embeddings	[…]
+  ```
+
+### 3_data_insert
+the folder contains Python scripts used to create databse collection and insert the data from Json files to databse.
 
   - **creat_collection.py**
     This Python script establishes a connection to Milvus, a vector database, creates a collection with a specified schema, including fields for storing embeddings and text, and creates an index on the embeddings field for efficient similarity search, utilizing the pymilvus library for interaction with Milvus.
@@ -54,6 +66,8 @@ This repository includes three folders each responsible for a specific purpose.
 
   - **printcollection.py**
     This Python script demonstrates connection to a Milvus server, lists existing collections, retrieves schema information for a specific collection, and prints the schema fields, utilizing the pymilvus library for interaction with Milvus.
+
+
 
 ## How to implement the data process
 
